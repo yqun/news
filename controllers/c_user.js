@@ -31,6 +31,8 @@ const handleSignin = (req, res) => {
                 message: '密码错误'
             });
         }
+        //保存 用户数据到 req.session 中
+        req.session.user = data[0];
         //账号密码正确  进行跳转
         res.send({
             code: 200,
@@ -58,10 +60,16 @@ const handleSignin = (req, res) => {
     // })
 
 }
-
+//退出
+const handleSignout = (req, res) => {
+    //清除session中保存的用户信息
+    delete req.session.user;
+    res.redirect('/signin');
+}
 
 //导出
 module.exports = {
     showSignin,
-    handleSignin
+    handleSignin,
+    handleSignout
 }
